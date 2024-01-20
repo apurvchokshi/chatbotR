@@ -62,11 +62,6 @@ loader = PyPDFDirectoryLoader(
 )
 documents=loader.load()
 
-print(len(documents))
-documents[0] # display four documents
-
-documents[0].page_content, documents[0].metadata
-
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE,
                                                 chunk_overlap=100)
 
