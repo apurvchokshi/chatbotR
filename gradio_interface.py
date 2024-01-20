@@ -1,4 +1,8 @@
-import gradio as gr
+import gr
+from chatbot_logic import add_text, generate_bot_response
+
+with gr.Blocks() as demo:
+    import gradio as gr
 
 
 def add_text(history, text):
@@ -58,3 +62,6 @@ with gr.Blocks() as demo:
 
 if __name__ == "__main__":
     demo.launch() # launch app
+
+def run():
+    demo.launch()  # Launch the Gradio app
