@@ -12,6 +12,8 @@ pypdf==3.17.4
 typing-extensions==4.9.0
 pypdf2==3.0.1
 langchain-community
+bitsandbytes==0.42.0
+accelerate==0.26.1
 
 
 torch==2.1.0
