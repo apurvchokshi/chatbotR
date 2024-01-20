@@ -18,29 +18,28 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, BitsAndB
 CHUNK_SIZE = 1000
 # Using HuggingFaceEmbeddings with the chosen embedding model
 embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-mpnet-base-v2",model_kwargs = {"device": "cuda"})
+    model_name="sentence-transformers/all-mpnet-base-v2",model_kwargs = {"device": "cpu"})
 
 # transformer model configuration
 # this massively model's precision for memory effieciency
 # The models accuacy is reduced.
-quant_config = BitsAndBytesConfig(
-    load_in_4bit=True,
-    bnb_4bit_use_double_quant=True,
-    bnb_4bit_quant_type="nf4",
-    bnb_4bit_compute_dtype=torch.bfloat16
-)
+# quant_config = BitsAndBytesConfig(
+#     load_in_4bit=True,
+#     bnb_4bit_use_double_quant=True,
+#     bnb_4bit_quant_type="nf4",
+#     bnb_4bit_compute_dtype=torch.bfloat16
+# )
 
 tensor_1 = torch.rand (4,4)
 
 model_id = "Deci/DeciLM-7B-instruct" # model repo id
-device = 'cuda' # Run on gpu if available else run on cpu
+device = 'cpu' # Run on gpu if available else run on cpu
 
 #
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForCausalLM.from_pretrained(model_id,
                                              trust_remote_code=True,
-                                             device_map = "auto",
-                                             quantization_config=quant_config)
+                                             device_map = "auto")
 
 # create a pipeline
 pipe = pipeline("text-generation",
