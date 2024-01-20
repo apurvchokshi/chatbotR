@@ -1,4 +1,4 @@
-import gr
+import gradio as gr
 from chatbot_logic import qa_chain_with_memory
 
 def add_text(history, text):
