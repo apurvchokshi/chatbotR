@@ -1,9 +1,5 @@
 import gr
-from chatbot_logic import add_text, generate_bot_response
-
-with gr.Blocks() as demo:
-    import gradio as gr
-
+from chatbot_logic import qa_chain_with_memory
 
 def add_text(history, text):
   # Adding user query to the chatbot and chain
@@ -27,41 +23,36 @@ def generate_bot_response(history,query):
           time.sleep(0.05)
           yield history,''
 
+
 # The GRADIO Interface
 with gr.Blocks() as demo:
     with gr.Row():
-            with gr.Row():
-              # Chatbot interface
-              chatbot = gr.Chatbot(label="DeciLM-7B-instruct bot",
-                                   value=[],
-                                   elem_id='chatbot')
-
+        with gr.Row():
+            # Chatbot interface
+            chatbot = gr.Chatbot(label="DeciLM-7B-instruct bot",
+                                value=[],
+                                elem_id='chatbot')
 
     with gr.Column():
         with gr.Column():
-          # Ask question input field
-          txt = gr.Text(show_label=False, placeholder="Enter question")
+            # Ask question input field
+            txt = gr.Text(show_label=False, placeholder="Enter question")
 
         with gr.Column():
-          # button to submit question to the bot
-          submit_btn = gr.Button('Ask')
-
-    # Event handler for uploading a PDF
+            # Button to submit question to the bot
+            submit_btn = gr.Button('Ask')
 
     # Event handler for submitting text question and generating response
     submit_btn.click(
-        fn= add_text,
+        fn=add_text,
         inputs=[chatbot, txt],
         outputs=[chatbot],
         queue=False
-        ).success(
-          fn=generate_bot_response,
-          inputs=[chatbot, txt],
-          outputs=[chatbot, txt]
-        )
+    ).success(
+        fn=generate_bot_response,
+        inputs=[chatbot, txt],
+        outputs=[chatbot, txt]
+    )
 
 if __name__ == "__main__":
-    demo.launch() # launch app
-
-def run():
     demo.launch()  # Launch the Gradio app
