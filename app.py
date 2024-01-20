@@ -1,3 +1,6 @@
+!pip install accelerate
+!pip install bitsandbytes
+
 import gradio_interface
 
 if __name__ == "__main__":
