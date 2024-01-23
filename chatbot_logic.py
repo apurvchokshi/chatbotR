@@ -17,14 +17,14 @@ from langchain.document_loaders import PyPDFDirectoryLoader # loader fo files fr
 from langchain.llms.huggingface_pipeline import HuggingFacePipeline # pipeline
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, BitsAndBytesConfig
 
-CHUNK_SIZE = 500
+CHUNK_SIZE = 1000
 # Using HuggingFaceEmbeddings with the chosen embedding model
 embeddings = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-mpnet-base-v2",model_kwargs = {"device": "cuda"})
 
-transformer model configuration
-this massively model's precision for memory effieciency
-The models accuacy is reduced.
+# transformer model configuration
+# this massively model's precision for memory effieciency
+# The models accuacy is reduced.
 quant_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_use_double_quant=True,
