@@ -67,7 +67,12 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE,
 
 splits = text_splitter.split_documents(documents)
 
-vectorstore_db = FAISS.from_documents(splits, embeddings) # create vector db for similarity search
+# vectorstore_db = FAISS.from_documents(splits, embeddings) # create vector db for similarity search
+
+flat_embeddings = [embedding.flatten() for embedding in embeddings.encode(splits)]
+
+# Create a FAISS index for CPU
+vectorstore_db = FAISS.from_documents(splits, flat_embeddings, use_gpu=False)
 
 
 # performs a similarity check and returns the top K embeddings
