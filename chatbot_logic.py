@@ -8,6 +8,8 @@ from langchain.prompts import PromptTemplate # for custom prompt specification
 from langchain.text_splitter import RecursiveCharacterTextSplitter # splitter for chunks
 from langchain.embeddings import HuggingFaceEmbeddings # embeddings
 from langchain.vectorstores import FAISS # vector store database
+from langchain_community.vectorstores import FAISS
+
 from langchain.chains import RetrievalQA # qa and retriever chain
 from langchain.memory import ConversationBufferMemory # for model's memoy on past conversations
 from langchain.document_loaders import PyPDFDirectoryLoader # loader fo files from firectory
@@ -67,13 +69,7 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE,
 
 splits = text_splitter.split_documents(documents)
 
-# vectorstore_db = FAISS.from_documents(splits, embeddings) # create vector db for similarity search
-
-flat_embeddings = [embedding.flatten() for embedding in embeddings.embed(splits)]
-
-# Create a FAISS index for CPU
-vectorstore_db = FAISS.from_documents(splits, flat_embeddings, use_gpu=False)
-
+vectorstore_db = FAISS.from_documents(splits, embeddings) # create vector db for similarity search
 
 # performs a similarity check and returns the top K embeddings
 # that are similar to the question’s embeddings
