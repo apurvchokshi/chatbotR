@@ -39,7 +39,8 @@ device = 'cpu' # Run on gpu if available else run on cpu
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForCausalLM.from_pretrained(model_id,
                                              trust_remote_code=True,
-                                             device_map = "auto")
+                                             device_map = "auto",
+                                             quantization_config=quant_config)
 
 # create a pipeline
 pipe = pipeline("text-generation",
