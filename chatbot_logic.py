@@ -18,7 +18,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline, BitsAndB
 CHUNK_SIZE = 1000
 # Using HuggingFaceEmbeddings with the chosen embedding model
 embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-mpnet-base-v2",model_kwargs = {"device": "cpu"})
+    model_name="sentence-transformers/all-mpnet-base-v2",model_kwargs = {"device": "cuda"})
 
 # transformer model configuration
 # this massively model's precision for memory effieciency
@@ -33,7 +33,7 @@ quant_config = BitsAndBytesConfig(
 tensor_1 = torch.rand (4,4)
 
 model_id = "Deci/DeciLM-7B-instruct" # model repo id
-device = 'cpu' # Run on gpu if available else run on cpu
+device = 'cuda' # Run on gpu if available else run on cpu
 
 #
 tokenizer = AutoTokenizer.from_pretrained(model_id)
